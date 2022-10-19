@@ -1,0 +1,49 @@
+version: "3.2"
+services:
+  nodejs:
+    build:
+      context: .
+    image: pastorcode/ecommerce-application
+    networks:
+      - frontend
+      - backend
+    environment:
+      - SECRET_KEY=6523e58bc0eec42c31b9635d5e0dfc23b6d119b73e633bf3a5284c79bb4a1ede
+      - APP_NAME="An e-commerce store application"
+      - APP_ENV=dev
+      - DB_NAME=ecommerce
+      - DB_HOST=ecommerce-mysql
+      - DB_USER=ecommerce
+      - DB_PASS=password
+    volumes:
+      - ./www/:/var/www/html/
+    ports:
+      - "30001:3001"
+    container_name: ecommerce-application
+  mysql:
+    image: mysql:5.7
+    networks:
+      - backend
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=ecommerce
+      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=ecommerce
+    container_name: ecommerce-mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:4.7
+    depends_on:
+      - mysql
+    networks:
+      - backend
+    ports:
+      - "30002:80"
+    environment:
+      - PMA_HOST=ecommerce-mysql
+      - PMA_PORT= 3306
+    volumes:
+      - /sessions
+    container_name: ecommerce-phpmyadmin
+networks:
+  frontend:
+  backend:

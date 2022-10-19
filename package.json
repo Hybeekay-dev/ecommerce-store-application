@@ -9,8 +9,8 @@
     "prestart": "npm run build-ts",
     "build-ts": "npm run clean && tsc",
     "clean": "rimraf dist/",
-    "migration:generate": "typeorm-ts-node-commonjs migration:generate src/migrations -d src/utils/data-source.ts",
-    "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
+    "docker:up": "docker-compose up",
+    "docker:down": "docker-compose down"
   },
   "keywords": [],
   "author": "Daniel Olumide <https://github.com/pastorcode>",

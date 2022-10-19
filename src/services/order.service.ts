@@ -32,7 +32,8 @@ export class OrderService{
         this.logger = logger;
     }
 
-    async get(customerId: number, query: GetOrderQueryDto){
+
+    async getAll(customerId: number, query: GetOrderQueryDto){
         try{
             return await this.orderRepository.getAll(customerId, query)
         }catch (e) {
@@ -87,5 +88,58 @@ export class OrderService{
             this.logger.error(e.message);
             throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    async update(customerId: number, orderId: number | any, body: CreateOrderDto){
+        const {productId, quantity} = body
+
+        const customer = await this.customerRepository.getOneById(customerId);
+
+
+        const product = await this.productRepository.getOneById(productId);
+
+        if(!product){
+            this.logger.error(ErrorMessages.PRODUCT_NOT_FOUND);
+            throw new HttpException(ErrorMessages.PRODUCT_NOT_FOUND, HttpStatus.NOT_FOUND);
+        }
+
+        const order = await this.orderRepository.getOne(orderId);
+
+        if(!order){
+            this.logger.error(ErrorMessages.ORDER_NOT_FOUND);
+            throw new HttpException(ErrorMessages.ORDER_NOT_FOUND, HttpStatus.NOT_FOUND);
+        }
+
+        const orderItem = await this.orderRepository.getOrderItem(orderId, product.id);
+
+        if (orderItem){
+            orderItem.quantity = quantity
+            await this.orderRepository.updateOrderItem(orderItem);
+        }else{
+            const item = new OrderItem();
+
+            item.order = order;
+            item.product = product;
+            item.price = product.price;
+            item.quantity = quantity;
+
+            await this.orderRepository.updateOrderItem(item);
+        }
+        // Get order items and update the total amount of order
+       const items = await this.orderRepository.getItems(orderId);
+
+
+        let totalOrderAmount = 0;
+
+        for(let item of items){
+            totalOrderAmount += Number(item.quantity) * Number(item.product.price)
+        }
+
+        order.totalAmount = totalOrderAmount;
+        await this.orderRepository.create(order);
+
+        return await this.orderRepository.getOne(orderId);
+
+
     }
 }

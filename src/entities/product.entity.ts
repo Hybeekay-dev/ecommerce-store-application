@@ -11,8 +11,8 @@ export class Product{
     @Column()
     name: string;
 
-    @Column({type: "decimal"})
-    price: number | string;
+    @Column("decimal", { precision: 13, scale: 2 })
+    price: number;
 
     @CreateDateColumn()
     createdAt: Date;

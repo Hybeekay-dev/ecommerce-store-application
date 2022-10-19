@@ -18,8 +18,9 @@ const logger = new WinstonLogger('Order');
 const orderService = new OrderService(orderRepository, productRepository, customerRepository, logger);
 const orderController = new OrderController(orderService);
 
-router.get('/', orderController.get);
+router.get('/', orderController.getAll);
 router.post('/', validator(CreateOrderDto), orderController.create);
+router.post('/:orderId/items', validator(CreateOrderDto), orderController.update);
 
 
 export default router;

@@ -6,9 +6,9 @@ export enum SortOrder {
 }
 
 export enum SortFields {
-    VOTES = 'upvotes',
-    CREATED_DATE = 'createdDate',
-    UPDATED_DATE = 'updatedDate',
+    AMOUNT = 'totalAmount',
+    CREATED_DATE = 'createdAt',
+    UPDATED_DATE = 'updatedAt',
 }
 
 export class GetOrderQueryDto{
@@ -21,10 +21,14 @@ export class GetOrderQueryDto{
     offset: number;
 
     @IsOptional()
-    @IsEnum(SortFields)
-    sortBy: string;
+    @IsNumber()
+    fromAmount: string;
+
+    @IsOptional()
+    @IsNumber()
+    toAmount: string;
 
     @IsOptional()
     @IsEnum(SortOrder)
-    sortOrder: string;
+    sort: SortOrder
 }

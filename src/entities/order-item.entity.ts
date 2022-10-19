@@ -10,8 +10,8 @@ export class OrderItem{
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({type: "decimal"})
-    price: number | string;
+    @Column("decimal", { precision: 13, scale: 2 })
+    price: number;
 
     @Column({type: "integer"})
     quantity: number;
@@ -33,7 +33,7 @@ export class OrderItem{
     @JoinColumn({name: "orderId"})
     order: Order;
 
-    @JoinColumn({name: "orderId"})
+    @Column({name: "orderId"})
     orderId: number;
 
 }

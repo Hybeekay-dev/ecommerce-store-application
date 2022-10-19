@@ -6,4 +6,5 @@ export enum SuccessMessages{
     PRODUCT_CREATED = "Product created Successfully",
     ORDER_CREATED = "Order created Successfully",
     ORDER_RETRIEVED = "Order retrieved Successfully",
+    ITEM_ADDED = "Order items updated Successfully",
 }

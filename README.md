@@ -65,4 +65,8 @@ For development, you will only need Node.js, a node global package, npm, MySQL a
 ## Docker
 
 ```bash
-npm docker:run
+# start container
+npm run docker:up
+
+# stop container
+npm run docker:down

@@ -1,4 +1,13 @@
-import {Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    JoinColumn,
+    ManyToOne,
+    OneToMany,
+    PrimaryColumn,
+    PrimaryGeneratedColumn
+} from "typeorm";
 import {OrderItem} from "./order-item.entity";
 import {Customer} from "./customer.entity";
 
@@ -16,8 +25,8 @@ export class Order{
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({type: "decimal"})
-    totalAmount: number | string;
+    @Column("decimal", { precision: 13, scale: 2 })
+    totalAmount: number;
 
     @Column({type: "enum", enum: Status, default: Status.PENDING})
     status: string;
@@ -28,8 +37,12 @@ export class Order{
     @CreateDateColumn()
     updatedAt: Date;
 
-    @ManyToOne(() => Customer, (customer) => customer.orders)
+    @ManyToOne(() => Customer, (customer) => customer.orders, {lazy: true})
+    @JoinColumn({name: 'customerId'})
     customer: Customer | null;
+
+    @Column({name: 'customerId'})
+    customerId: number
 
     @OneToMany(() => OrderItem, (item) => item.order)
     items: OrderItem[];

@@ -24,7 +24,7 @@ export class OrderRepository{
 
         const builder = AppDataSource.getRepository(Order)
             .createQueryBuilder(`orders`)
-            // .leftJoinAndMapMany(`orders.items`, OrderItem, `order_items`, `orders.id = order_items.orderId`)
+            // .leftJoinAndSelect(`orders.items`, `order_items`, `orders.id = order_items.orderId`)
             .where(`orders.customerId = '${customerId}'`)
 
         if(fromAmount){

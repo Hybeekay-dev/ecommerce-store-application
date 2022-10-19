@@ -1,4 +1,4 @@
-# Ecommerce Store Application - Enyata Assessment Test (Backend Engineer)
+# Ecommerce Store Application - Enyata Assessment Test
 
 ## Requirements
 

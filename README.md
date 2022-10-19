@@ -54,7 +54,7 @@ For development, you will only need Node.js, a node global package, npm, MySQL a
 
 
 ## Assumption
-- Only the Customer & Order Module was to be implemented
+- Only the Customer & Order module is to be implemented.
 
 
 ## Run app

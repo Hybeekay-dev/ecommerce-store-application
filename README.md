@@ -2,7 +2,7 @@
 
 ## Requirements
 
-For development, you will only need Node.js, a node global package, npm, MySQL and Redis installed in your development environment.
+For development, you will only need Node.js, a node global package, npm, MySQL and Docker installed in your development environment.
 
 ### Node
 - #### Node installation on Windows
